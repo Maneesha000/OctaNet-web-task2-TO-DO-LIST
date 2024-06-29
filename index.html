@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    .todo-list {
+      margin: 0 auto;
+      width: 500px;
+      padding: 20px;
+      border: 1px solid #1898ca;
+      border-radius: 5px;
+    }
+    .todo-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .todo-item input {
+      flex-grow: 1;
+      padding: 5px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>To-Do List</h1>
+  <div class="todo-list">
+    <form id="add-todo">
+      <input type="text" id="task-name" placeholder="Enter task">
+      <input type="date" id="due-date">
+      <select id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+      <button type="button" id="add-button">Add Task</button>
+    </form>
+    <div id="todo-items"></div>
+  </div>
+  <script>
+    const addButton = document.getElementById('add-button');
+    const todoItems = document.getElementById('todo-items');
+    
+    addButton.addEventListener('click', function() {
+      // Get task details from input fields
+      const taskName = document.getElementById('task-name').value;
+      const dueDate = document.getElementById('due-date').value;
+      const difficulty = document.getElementById('difficulty').value;
+      
+      // Check if all fields are filled
+      if (taskName && dueDate && difficulty) {
+        // Create a new list item element
+        const todoItem = document.createElement('div');
+        todoItem.classList.add('todo-item');
+        
+        // Create elements for task name, due date, difficulty, and delete button
+        const taskSpan = document.createElement('span');
+        taskSpan.innerText = taskName;
+        const dueDateSpan = document.createElement('span');
+        dueDateSpan.innerText = `Due: ${dueDate}`;
+        const difficultySpan = document.createElement('span');
+        difficultySpan.innerText = `Difficulty: ${difficulty}`;
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        
+        // Add elements to the list item
+        todoItem.appendChild(taskSpan);
+        todoItem.appendChild(dueDateSpan);
+        todoItem.appendChild(difficultySpan);
+        todoItem.appendChild(deleteButton);
+        
+        // Add the list item to the todo list
+        todoItems.appendChild(todoItem);
+        
+        // Clear input fields after adding
+        document.getElementById('task-name').value = '';
+        document.getElementById('due-date').value = '';
+        
+        // Add event listener for delete button
+        deleteButton.addEventListener('click', function() {
+          todoItems.removeChild(todoItem);
+        });
+      } else {
+        alert('Please fill in all fields!');
+      }
+    });
+  </script>
+</body>
+</html>
